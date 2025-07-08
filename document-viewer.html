@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
+
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+>
+  
+<style>
+  html, body {
+  font-size: 14px;
+  height: 100vh
+}
+
+input,
+select,
+textarea,
+button {
+  font-size: 0.85rem;
+  padding: 0.3em 0.6em;
+  min-height: 1.5em;
+  border-radius: 0.25em;
+}
+main.container {
+  height: 100%;;
+}
+
+</style>
+  <title>Document</title>
+</head>
+<body>
+ <main class="container">
+  <div class="grid">
+    <article>
+    <header>
+      <h1>Document API Guide</h1>
+      <p>Tutorial</p>
+    </header>
+<object data="https://postnord-dev.test.apimanagement.eu20.hana.ondemand.com/v1/document/sources/basware/repositories/default/documents/t3778b7y0wl66380cqlfx57qjzsh74bz" type="application/pdf" width="100%" height="600">
+  <p>Your browser does not support PDFs.
+     <a href="https://postnord-dev.test.apimanagement.eu20.hana.ondemand.com/v1/document/sources/basware/repositories/default/documents/t3778b7y0wl66380cqlfx57qjzsh74bz">Download the PDF</a>.</p>
+</object>
+    <section>
+      <h3>Norway Flat Files</h3>
+      <form id="norwayFlatFilesForm" 
+        hx-get="" hx-target="#document-viewer" hx-swap="innerHTML" hx-trigger="submit"
+        >
+  <fieldset class="grid">
+    <input 
+      name="sourceID"
+      placeholder="azure_norway"
+      aria-label="sourceID"
+      value="azure_norway"
+      
+    />
+    <input
+      type="text"
+      name="repoID"
+      placeholder="default"
+      aria-label="repoID"
+      value="dev"
+      
+    />
+    <input
+      type="text"
+      name="docID"
+      placeholder="default"
+      aria-label="docID"
+      required
+    />
+    <input
+      type="submit"
+      value="View"
+    />
+  </fieldset>
+  <small id="basware-helper">
+    We'll never share your email with anyone else.
+  </small>
+      </form>
+      <div id="norway-output">
+        <p>Output will be displayed here.</p>
+      </div>
+    </section>
+    
+  </article>
+  <article>
+    <h3>View Document</h3>
+    <div id="document-viewer">
+
+    </div>
+  </article>
+  </div>
+</main>
+
+</body>
+
+<script>
+  function restUrl(form) {
+      const source = form.querySelector("[name='sourceID']").value || "default";
+      const repo = form.querySelector("[name='repoID']").value || "default";
+      const doc = form.querySelector("[name='docID']").value || "default";
+
+      return `/v1/document/sources/${encodeURIComponent(source)}/repositories/${encodeURIComponent(repo)}/documents/${encodeURIComponent(doc)}`;
+    }
+    // Attach event listeners
+    document.querySelectorAll("form").forEach((form) => {
+      /* form.addEventListener("htmx:configRequest", (evt) => {
+        const url = restUrl(form);
+        evt.detail.path = url;
+      }); */
+      form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const url = restUrl(form); // build your REST-style URL from inputs
+
+      htmx.ajax("GET", url, {
+        target: form.getAttribute("hx-target"),
+        swap: form.getAttribute("hx-swap"),
+      });
+    });
+    });
+
+    document.body.addEventListener("htmx:beforeSwap", async function(evt) {
+  // Only handle our form target
+  if (evt.detail.target.id !== "document-viewer") return;
+
+  const xhr = evt.detail.xhr;
+  const contentType = xhr.getResponseHeader("Content-Type");
+  const url = xhr.responseURL;
+  const viewer = document.getElementById("document-viewer");
+
+  // Prevent HTMX from swapping in raw body
+  evt.preventDefault();
+
+  // Decide how to render based on Content-Type
+  if (contentType.includes("application/pdf")) {
+    viewer.innerHTML = `<object data="${url}" type="application/pdf" width="100%" height="600">
+  <p>Your browser does not support PDFs.
+     <a href="${url}">Download the PDF</a>.</p>
+</object>`;
+  } else if (contentType.startsWith("image/")) {
+    viewer.innerHTML = `<img src="${url}" style="max-width:100%" />`;
+  } else if (contentType.startsWith("text/")) {
+    const text = xhr.responseText;
+    viewer.innerHTML = `<pre style="white-space: pre-wrap;">${text}</pre>`;
+  } else if (contentType.includes("openxmlformats")) {
+    // DOCX, XLSX
+    viewer.innerHTML = `
+      <iframe 
+        src="https://view.officeapps.live.com/op/embed.aspx?src=${window.location.origin + url}" 
+        width="100%" height="600px">
+      </iframe>`;
+  } else {
+    viewer.innerHTML = `
+      <p>Unsupported file type (${contentType}). 
+      <a href="${url}" download>Download</a></p>`;
+  }
+});
+</script>
+
+
+</html>
