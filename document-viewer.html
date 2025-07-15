@@ -32,139 +32,139 @@
     <title>Document</title>
   </head>
   <body>
-    <main class="container">
-      <article>
-        <header>
-          <h1>Document API Guide</h1>
-          
-        </header>
+  <main class="container">
+    <article>
+      <header>
+        <h1>Document API Guide</h1>
+      </header>
 
-        <section class="grid">
-          <details role="button" class="primary" open>
-            <summary><h3>Norway Flat Files</h3></summary>
-            <article>
-              <h3>Norway Flat Files</h3>
-              <form
-                id="norwayFlatFilesForm"
-                hx-get=""
-                hx-target="#document-viewer"
-                hx-swap="innerHTML"
-                hx-trigger="submit"
-              >
-                <fieldset class="container-fluid">
-                  <div>
-                    <input
-                      name="sourceID"
-                      placeholder="azure_norway"
-                      aria-label="sourceID"
-                      aria-label="Text"
-                    />
-                    <input
-                      type="text"
-                      name="repoID"
-                      placeholder="default"
-                      aria-label="repoID"
-                      value="dev"
-                    />
-                  </div>
+      <section class="grid">
+        <!-- Norway Flat Files Form -->
+        <article>
+          <h3>Norway Flat Files</h3>
+          <form
+            id="norwayFlatFilesForm"
+            hx-get=""
+            hx-target="#document-viewer"
+            hx-swap="innerHTML"
+            hx-trigger="submit"
+          >
+            <fieldset>
+              <legend>Document Info</legend>
+              <div class="grid">
+                <input
+                  name="sourceID"
+                  placeholder="azure_norway"
+                  aria-label="Source ID"
+                />
+                <input
+                  type="text"
+                  name="repoID"
+                  placeholder="Repository"
+                  aria-label="Repo ID"
+                  value="dev"
+                />
+                <input
+                  type="text"
+                  name="docID"
+                  placeholder="Document ID"
+                  aria-label="Document ID"
+                />
+              </div>
+            </fieldset>
 
-                  <div role="group">
-                    <input
-                      type="text"
-                      name="stream"
-                      id="stream"
-                      placeholder="AR"
-                      value="AR"
-                    />
-                    <input
-                      type="text"
-                      name="pre-system"
-                      id="pre-system"
-                      placeholder="DDS"
-                      value="DDS"
-                    />
-                    <input
-                      type="text"
-                      name="year"
-                      id="year"
-                      placeholder="2025"
-                      value="2025"
-                    />
-                    <input
-                      type="text"
-                      name="month"
-                      id="month"
-                      placeholder="July"
-                      value="July"
-                    />
-                  </div>
-                  <input
-                    type="text"
-                    name="docID"
-                    id="docID"
-                    placeholder="docID"
-                    value=""
-                  />
-                  <input type="submit" value="View" />
-                </fieldset>
-              </form>
-            </article>
-          </details>
+            <fieldset>
+              <legend>Document Path</legend>
+              <div class="grid">
+                <input
+                  type="text"
+                  name="stream"
+                  placeholder="Stream"
+                  value="AR"
+                  aria-label="Stream"
+                />
+                <input
+                  type="text"
+                  name="pre-system"
+                  placeholder="Pre-System"
+                  value="DDS"
+                  aria-label="Pre System"
+                />
+                <input
+                  type="text"
+                  name="year"
+                  placeholder="Year"
+                  value="2025"
+                  aria-label="Year"
+                />
+                <input
+                  type="text"
+                  name="month"
+                  placeholder="Month"
+                  value="July"
+                  aria-label="Month"
+                />
+              </div>
+            </fieldset>
 
-          <details  open>
-            <summary><h3>Generic</h3></summary>
-            <article>
-              <h3>Generic</h3>
-              <form
-                id="generic"
-                hx-get=""
-                hx-target="#document-viewer"
-                hx-swap="innerHTML"
-                hx-trigger="submit"
-              >
-                <fieldset class="grid">
-                  <input
-                    name="sourceID"
-                    placeholder="azure_norway"
-                    aria-label="sourceID"
-                    value="azure_norway"
-                  />
-                  <input
-                    type="text"
-                    name="repoID"
-                    placeholder="default"
-                    aria-label="repoID"
-                    value="dev"
-                  />
-                  <input
-                    type="text"
-                    name="docID"
-                    placeholder="default"
-                    aria-label="docID"
-                    required
-                  />
-                  <input type="submit" value="View" />
-                </fieldset>
-              </form>
-            </article>
-          </details>
-        </section>
-      </article>
-      <article>
-        <header
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-        >
-          <h3>View Document</h3>
-        </header>
-        <div id="link-copy"></div>
-        <div id="document-viewer" style="overflow: scroll"></div>
-      </article>
-    </main>
-  </body>
+            <button type="submit">View</button>
+          </form>
+        </article>
+
+        <!-- Generic Form -->
+        <article>
+          <h3>Generic</h3>
+          <form
+            id="generic"
+            hx-get=""
+            hx-target="#document-viewer"
+            hx-swap="innerHTML"
+            hx-trigger="submit"
+          >
+            <fieldset>
+              <legend>Document Info</legend>
+              <div class="grid">
+                <input
+                  name="sourceID"
+                  placeholder="Source ID"
+                  aria-label="Source ID"
+                  value="azure_norway"
+                />
+                <input
+                  type="text"
+                  name="repoID"
+                  placeholder="Repository"
+                  aria-label="Repo ID"
+                  value="dev"
+                />
+                <input
+                  type="text"
+                  name="docID"
+                  placeholder="Document ID"
+                  aria-label="Document ID"
+                  required
+                />
+              </div>
+            </fieldset>
+            <button type="submit">View</button>
+          </form>
+        </article>
+      </section>
+    </article>
+
+    <!-- Viewer -->
+    <article>
+      <header
+        style="display: flex; justify-content: space-between; align-items: center"
+      >
+        <h3>View Document</h3>
+      </header>
+      <div id="link-copy"></div>
+      <div id="document-viewer" style="overflow: auto"></div>
+    </article>
+  </main>
+</body>
+
 
   <script>
     function restUrl(form) {
