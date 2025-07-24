@@ -178,14 +178,14 @@
         const year = form.querySelector("[name='year']").value || "default";
         const month = form.querySelector("[name='month']").value || "default";
         let finalDocID = `${stream}/${preSystem}/${year}/${month}/${doc}`;
-        return `/v1/document/sources/${encodeURIComponent(
+        return `/v1/document_management_srv/sources/${encodeURIComponent(
           source
         )}/repositories/${encodeURIComponent(
           repo
         )}/documents/${encodeURIComponent(finalDocID)}`;
       }
 
-      return `/v1/document/sources/${encodeURIComponent(
+      return `/v1/document_management_srv/sources/${encodeURIComponent(
         source
       )}/repositories/${encodeURIComponent(
         repo
