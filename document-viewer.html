@@ -50,12 +50,13 @@
             hx-trigger="submit"
           >
             <fieldset>
-              <legend>Document Info</legend>
+              <legend>Document Repo</legend>
               <div class="grid">
                 <input
                   name="sourceID"
                   placeholder="azure_norway"
                   aria-label="Source ID"
+                  value="azure_norway"
                 />
                 <input
                   type="text"
@@ -64,12 +65,7 @@
                   aria-label="Repo ID"
                   value="dev"
                 />
-                <input
-                  type="text"
-                  name="docID"
-                  placeholder="Document ID"
-                  aria-label="Document ID"
-                />
+               
               </div>
             </fieldset>
 
@@ -106,7 +102,15 @@
                 />
               </div>
             </fieldset>
-
+            <fieldset>
+              <legend>Document ID</legend>
+               <input
+                  type="text"
+                  name="docID"
+                  placeholder="Document ID"
+                  aria-label="Document ID"
+                />
+            </fieldset>
             <button type="submit">View</button>
           </form>
         </article>
